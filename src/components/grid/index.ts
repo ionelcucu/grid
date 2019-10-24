@@ -1,3 +1,5 @@
+import {GridCell} from './gridCell';
+
 export interface IGridHeader {
   key: string;
   label: string
@@ -69,10 +71,9 @@ export class Grid {
   }
 
   createTableCell(content: string) {
-    let cell = document.createElement('div');
-    cell.className = 'grid-cell';
-    cell.style.minWidth = 100 / this.tableHeaders.length + '%';
-    cell.innerHTML = content;
-    return cell;
+    const cell = new GridCell(content);
+
+    cell.element.style.minWidth = 100 / this.tableHeaders.length + '%';
+    return cell.element;
   }
 }
