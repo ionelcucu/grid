@@ -22,11 +22,13 @@ const headers = [
 const data = [
   {
     firstName: 'Ionel',
-    lastName: 'Cucu'
+    lastName: 'Cucu',
+    age: 28
   },
   {
     firstName: 'Adrian',
-    lastName: 'Petrea'
+    lastName: 'Petrea',
+    age: 29
   }
 ];
 

@@ -5,7 +5,7 @@ export interface IGridHeader {
 
 export interface IGridOptions {
   data: any,
-  headers: IGridHeader[]
+  headers: IGridHeader[],
 }
 
 export class Grid {
@@ -21,17 +21,26 @@ export class Grid {
   ) {
     this.gridOptions = options;
     this.tableHeaders = options.headers;
-    container.appendChild(this.createTableHeaders());
+    container.appendChild(this.createTableStructure());
+  }
+
+  createTableStructure() {
+    const tableWrapper = document.createElement('div');
+    const tableHeaders = this.createTableHeaders();
+    const tableBody = this.createTableBody();
+    tableWrapper.className = 'grid-table';
+    tableWrapper.appendChild(tableHeaders);
+    tableWrapper.appendChild(tableBody);
+    return tableWrapper;
   }
 
   createTableHeaders() {
     const row = this.createTableRow();
+    row.className = 'grid-row grid-table-header';
     const cells = [];
 
     for (let i = 0, len = this.tableHeaders.length; i < len; i++) {
-      let cell = document.createElement('div');
-      cell.className = 'grid-cell';
-      cell.innerHTML = this.gridOptions.headers[i].label;
+      let cell = this.createTableCell(this.tableHeaders[i].label);
       cells.push(cell);
       row.appendChild(cell);
     }
@@ -40,6 +49,17 @@ export class Grid {
   }
 
   createTableBody() {
+    const tableBody = document.createElement('div');
+    tableBody.className = 'grid-body';
+    for (let i = 0, len = this.gridOptions.data.length; i < len; i++) {
+      let row = this.createTableRow();
+      for (let j = 0, length = this.tableHeaders.length; j < length; j++) {
+        let cell = this.createTableCell(this.gridOptions.data[i][this.tableHeaders[j].key]);
+        row.appendChild(cell);
+      }
+      tableBody.appendChild(row);
+    }
+    return tableBody;
   }
 
   createTableRow() {
@@ -48,6 +68,11 @@ export class Grid {
     return rowElement;
   }
 
-  createTableCell() {
+  createTableCell(content: string) {
+    let cell = document.createElement('div');
+    cell.className = 'grid-cell';
+    cell.style.minWidth = 100 / this.tableHeaders.length + '%';
+    cell.innerHTML = content;
+    return cell;
   }
 }
