@@ -23,7 +23,7 @@ const data = [
   {
     firstName: 'Ionel',
     lastName: 'Cucu',
-    age: 28
+    age: 28,
   },
   {
     firstName: 'Adrian',

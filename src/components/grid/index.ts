@@ -1,4 +1,5 @@
 import {GridCell} from './gridCell';
+import { GridRow } from './gridRow';
 
 export interface IGridHeader {
   key: string;
@@ -37,29 +38,29 @@ export class Grid {
   }
 
   createTableHeaders() {
-    const row = this.createTableRow();
-    row.className = 'grid-row grid-table-header';
+    const row = new GridRow();
+    row.element.className = 'grid-row grid-table-header';
     const cells = [];
 
     for (let i = 0, len = this.tableHeaders.length; i < len; i++) {
       let cell = this.createTableCell(this.tableHeaders[i].label);
       cells.push(cell);
-      row.appendChild(cell);
+      row.addCell(cell);
     }
 
-    return row;
+    return row.element;
   }
 
   createTableBody() {
     const tableBody = document.createElement('div');
     tableBody.className = 'grid-body';
     for (let i = 0, len = this.gridOptions.data.length; i < len; i++) {
-      let row = this.createTableRow();
+      let row = new GridRow();
       for (let j = 0, length = this.tableHeaders.length; j < length; j++) {
         let cell = this.createTableCell(this.gridOptions.data[i][this.tableHeaders[j].key]);
-        row.appendChild(cell);
+        row.addCell(cell);
       }
-      tableBody.appendChild(row);
+      tableBody.appendChild(row.element);
     }
     return tableBody;
   }
@@ -72,8 +73,7 @@ export class Grid {
 
   createTableCell(content: string) {
     const cell = new GridCell(content);
-
     cell.element.style.minWidth = 100 / this.tableHeaders.length + '%';
-    return cell.element;
+    return cell;
   }
 }
