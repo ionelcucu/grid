@@ -1,9 +1,11 @@
 import {GridCell} from './gridCell';
 import { GridRow } from './gridRow';
+import { GridColumn } from './gridColumn';
 
 export interface IGridHeader {
+  id?: string,
   key: string;
-  label: string
+  label: string,
 }
 
 export interface IGridOptions {
@@ -25,6 +27,10 @@ export class Grid {
     this.gridOptions = options;
     this.tableHeaders = options.headers;
     container.appendChild(this.createTableStructure());
+    
+    // Example on getting column cells
+    // const secondColumn = new GridColumn();
+    // console.log(secondColumn.getColumnCells('2'));
   }
 
   createTableStructure() {
@@ -39,12 +45,11 @@ export class Grid {
 
   createTableHeaders() {
     const row = new GridRow();
-    row.element.className = 'grid-row grid-table-header';
-    const cells = [];
+    row.addClass('grid-table-header');
 
     for (let i = 0, len = this.tableHeaders.length; i < len; i++) {
       let cell = this.createTableCell(this.tableHeaders[i].label);
-      cells.push(cell);
+      cell.addAttribute('data-column-id', i.toString());
       row.addCell(cell);
     }
 
@@ -58,6 +63,7 @@ export class Grid {
       let row = new GridRow();
       for (let j = 0, length = this.tableHeaders.length; j < length; j++) {
         let cell = this.createTableCell(this.gridOptions.data[i][this.tableHeaders[j].key]);
+        cell.addAttribute('data-column-id', j.toString());
         row.addCell(cell);
       }
       tableBody.appendChild(row.element);
@@ -76,4 +82,6 @@ export class Grid {
     cell.element.style.minWidth = 100 / this.tableHeaders.length + '%';
     return cell;
   }
+
+
 }

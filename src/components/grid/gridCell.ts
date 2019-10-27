@@ -4,10 +4,10 @@ export class GridCell {
   element: HTMLElement;
 
   constructor(content: string) {
-      this.element = document.createElement('div');
-      this.element.className = this.elementClass;
-      this.element.innerHTML = content;
-      this.content = content;
+    this.element = document.createElement('div');
+    this.element.className = this.elementClass;
+    this.element.innerHTML = content;
+    this.content = content;
   }
 
   getContent(): string {
@@ -17,5 +17,13 @@ export class GridCell {
   setContent(content: string): void {
     this.content = content;
     this.element.innerHTML = content;
+  }
+
+  addAttribute(attributeName: string, attributeValue: string) {
+    this.element.setAttribute(attributeName, attributeValue);
+  }
+
+  addClass(className: string) {
+    this.element.classList.add(className);
   }
 }
