@@ -29,11 +29,152 @@ const data = [
     firstName: 'Adrian',
     lastName: 'Petrea',
     age: 29
-  }
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
+  {
+    firstName: 'Ionel',
+    lastName: 'Cucu',
+    age: 28,
+  },
+  {
+    firstName: 'Adrian',
+    lastName: 'Petrea',
+    age: 29
+  },
 ];
 
 const myGrid1 = new Grid(grid1, {
   data: data,
-  headers: headers
+  headers: headers,
+  pagination: true
 });
 

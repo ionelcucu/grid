@@ -1,6 +1,7 @@
-import {GridCell} from './gridCell';
+import { GridCell } from './gridCell';
 import { GridRow } from './gridRow';
-import { GridColumn } from './gridColumn';
+import { GridPaginator } from './gridPaginator';
+// import { GridColumn } from './gridColumn';
 
 export interface IGridHeader {
   id?: string,
@@ -11,25 +12,37 @@ export interface IGridHeader {
 export interface IGridOptions {
   data: any,
   headers: IGridHeader[],
+  pagination?: boolean,
+  itemsPerPage?: number,
+  itemsPerPageList?: number[]
 }
 
 export class Grid {
 
-  gridOptions: IGridOptions;
+  gridOptions: IGridOptions = {
+    data: [],
+    headers: [],
+    pagination: false,
+    itemsPerPage: 10,
+    itemsPerPageList: [10, 25, 50]
+  };
 
   tableHeaders: IGridHeader[];
   tableBody: string = '';
+  paginator: GridPaginator;
+  container: HTMLElement;
 
   constructor(
     container: HTMLElement,
     options: IGridOptions
   ) {
-    this.gridOptions = options;
+    this.gridOptions = { ...this.gridOptions, ...options };
     this.tableHeaders = options.headers;
-    container.appendChild(this.createTableStructure());
-    
+    this.container = container;
+    this.container.appendChild(this.createTableStructure());
+
     // Example on getting column cells
-    // const secondColumn = new GridColumn();
+    // const secondColumn = new GridColumn(this.container);
     // console.log(secondColumn.getColumnCells('2'));
   }
 
@@ -40,6 +53,14 @@ export class Grid {
     tableWrapper.className = 'grid-table';
     tableWrapper.appendChild(tableHeaders);
     tableWrapper.appendChild(tableBody);
+    if (this.gridOptions.pagination) {
+      const pagination = new GridPaginator(
+        this.gridOptions.data.length,
+        this.gridOptions.itemsPerPage,
+        this.gridOptions.itemsPerPageList
+      );
+      tableWrapper.appendChild(pagination.createPaginator());
+    }
     return tableWrapper;
   }
 
@@ -59,7 +80,13 @@ export class Grid {
   createTableBody() {
     const tableBody = document.createElement('div');
     tableBody.className = 'grid-body';
-    for (let i = 0, len = this.gridOptions.data.length; i < len; i++) {
+    let itemsNumber = this.gridOptions.data.length;
+    if (this.gridOptions.pagination) {
+      itemsNumber = this.gridOptions.data.length < this.gridOptions.itemsPerPage ?
+        this.gridOptions.data.length :
+        this.gridOptions.itemsPerPage;
+    }
+    for (let i = 0, len = itemsNumber; i < len; i++) {
       let row = new GridRow();
       for (let j = 0, length = this.tableHeaders.length; j < length; j++) {
         let cell = this.createTableCell(this.gridOptions.data[i][this.tableHeaders[j].key]);
