@@ -1,18 +1,36 @@
 .grid-table {
-    display: flex;
-    flex-direction: column;
+  display: block;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
 }
 
 .grid-row {
-    display: flex;
-    border-bottom: 1px solid #aaaaaa;
+  display: block;
+  border-bottom: 1px solid #aaaaaa;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
-.grid-table-header{
-    font-weight: 700;
-    background-color: #dddddd;
+.grid-head {
+  font-weight: 700;
+  background-color: #dddddd;
+}
+
+.grid-body {
+  display: block;
+  position: relative;
 }
 
 .grid-cell {
-    padding: 2px 5px;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border-left: 1px solid #ddd;
+  line-height: 30px;
+
+  &:last-child {
+    border-right: 1px solid #ddd;
+  }
 }

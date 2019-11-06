@@ -1,12 +1,14 @@
 import { GridCell } from './gridCell';
 import { GridRow } from './gridRow';
 import { GridPaginator } from './gridPaginator';
-// import { GridColumn } from './gridColumn';
+import { GridColumn } from './gridColumn';
 
 export interface IGridHeader {
   id?: string,
   key: string;
   label: string,
+
+  [key: string]: any
 }
 
 export interface IGridOptions {
@@ -14,7 +16,7 @@ export interface IGridOptions {
   headers: IGridHeader[],
   pagination?: boolean,
   itemsPerPage?: number,
-  itemsPerPageList?: number[]
+  itemsPerPageList?: number[],
 }
 
 export class Grid {
@@ -31,12 +33,13 @@ export class Grid {
   tableBody: string = '';
   paginator: GridPaginator;
   container: HTMLElement;
+  columns: GridColumn[] = [];
 
   constructor(
     container: HTMLElement,
     options: IGridOptions
   ) {
-    this.gridOptions = { ...this.gridOptions, ...options };
+    this.gridOptions = {...this.gridOptions, ...options};
     this.tableHeaders = options.headers;
     this.container = container;
     this.container.appendChild(this.createTableStructure());
@@ -48,11 +51,14 @@ export class Grid {
 
   createTableStructure() {
     const tableWrapper = document.createElement('div');
-    const tableHeaders = this.createTableHeaders();
-    const tableBody = this.createTableBody();
+    const columnWidths = this.computeColumnWidth();
+    const tableHeaders = this.createTableHeaders(columnWidths);
+    const tableBody = this.createTableBody(columnWidths);
     tableWrapper.className = 'grid-table';
     tableWrapper.appendChild(tableHeaders);
     tableWrapper.appendChild(tableBody);
+
+
     if (this.gridOptions.pagination) {
       const pagination = new GridPaginator(
         this.gridOptions.data.length,
@@ -64,20 +70,28 @@ export class Grid {
     return tableWrapper;
   }
 
-  createTableHeaders() {
+  createTableHeaders(columnWidths: any) {
+    const tableHead = document.createElement('div');
+    tableHead.className = 'grid-head';
+    tableHead.style.height = '30px';
     const row = new GridRow();
-    row.addClass('grid-table-header');
+
+    tableHead.appendChild(row.element);
 
     for (let i = 0, len = this.tableHeaders.length; i < len; i++) {
-      let cell = this.createTableCell(this.tableHeaders[i].label);
+
+      let column = new GridColumn(this.container, this.tableHeaders[i].key, columnWidths[this.tableHeaders[i].key]);
+      this.columns.push(column);
+
+      let cell = this.createTableCell(this.tableHeaders[i].label, column.width);
       cell.addAttribute('data-column-id', i.toString());
       row.addCell(cell);
     }
 
-    return row.element;
+    return tableHead;
   }
 
-  createTableBody() {
+  createTableBody(columnWidths: any) {
     const tableBody = document.createElement('div');
     tableBody.className = 'grid-body';
     let itemsNumber = this.gridOptions.data.length;
@@ -88,8 +102,9 @@ export class Grid {
     }
     for (let i = 0, len = itemsNumber; i < len; i++) {
       let row = new GridRow();
+      row.setRowPosition(i);
       for (let j = 0, length = this.tableHeaders.length; j < length; j++) {
-        let cell = this.createTableCell(this.gridOptions.data[i][this.tableHeaders[j].key]);
+        let cell = this.createTableCell(this.gridOptions.data[i][this.tableHeaders[j].key], columnWidths[this.tableHeaders[j].key]);
         cell.addAttribute('data-column-id', j.toString());
         row.addCell(cell);
       }
@@ -98,17 +113,44 @@ export class Grid {
     return tableBody;
   }
 
-  createTableRow() {
-    const rowElement = document.createElement('div');
-    rowElement.className = 'grid-row';
-    return rowElement;
-  }
-
-  createTableCell(content: string) {
+  createTableCell(content: string, width: number) {
     const cell = new GridCell(content);
-    cell.element.style.minWidth = 100 / this.tableHeaders.length + '%';
+    cell.element.style.width = width + '%';
     return cell;
   }
 
+  computeColumnWidth() {
 
+    //TODO: Change this to a proper version
+    let contentAverage = this.gridOptions.headers.reduce((columns, currentValue) => {
+      columns[currentValue.key] = 0;
+      return columns;
+    }, {} as IGridHeader);
+
+    let totalWidth = 0;
+
+    for (let i = 0, len = this.gridOptions.data.length; i < len; i++) {
+      for (let columnKey in contentAverage) {
+        if (contentAverage.hasOwnProperty(columnKey)) {
+          contentAverage[columnKey] += this.gridOptions.data[i][columnKey].toString().length;
+        }
+      }
+    }
+
+    for (let columnKey in contentAverage) {
+      if (contentAverage.hasOwnProperty(columnKey)) {
+        contentAverage[columnKey] = Math.ceil(contentAverage[columnKey] / this.gridOptions.data.length);
+        totalWidth += contentAverage[columnKey];
+      }
+    }
+
+    let percent = 100 / totalWidth;
+
+    for(let key in contentAverage) {
+      contentAverage[key] *= percent;
+    }
+
+    return contentAverage;
+    //set column widths
+  }
 }

@@ -1,10 +1,15 @@
 import './style.scss';
 import { Grid } from './components/grid/index';
+import { gridData } from './gridData';
 
 const grid1 = document.querySelector('.grid1') as HTMLElement;
 const grid2 = document.querySelector('.grid2') as HTMLElement;
 
 const headers = [
+  {
+    key: 'id',
+    label: 'id'
+  },
   {
     key: 'firstName',
     label: 'First Name'
@@ -16,165 +21,23 @@ const headers = [
   {
     key: 'age',
     label: 'Age'
+  },
+  {
+    key: 'gender',
+    label: 'Gender'
+  },
+  {
+    key: 'email',
+    label: 'Email'
+  }, {
+    key: 'ip_address',
+    label: 'IP Address'
   }
 ];
 
-const data = [
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-  {
-    firstName: 'Ionel',
-    lastName: 'Cucu',
-    age: 28,
-  },
-  {
-    firstName: 'Adrian',
-    lastName: 'Petrea',
-    age: 29
-  },
-];
-
 const myGrid1 = new Grid(grid1, {
-  data: data,
+  data: gridData,
   headers: headers,
-  pagination: true
+  pagination: false
 });
 
